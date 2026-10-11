@@ -1,3 +1,5 @@
+> **This fork adds a read-only MCP adapter for Indian/global stock research using your ChatGPT or Claude host model, without a separate model API key.** See [MCP setup and limitations](MCP_README.md). Original upstream framework documentation follows.
+
 <p align="center">
   <img src="tradingagents/assets/tauric-logo.svg" width="60%" alt="Tauric Research">
 </p>

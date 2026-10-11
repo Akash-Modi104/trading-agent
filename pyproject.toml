@@ -29,6 +29,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+mcp = ["mcp>=1.30,<2"]
 dev = [
     "ruff>=0.16",
     "pytest>=8.0",
@@ -42,6 +43,7 @@ bedrock = [
 
 [project.scripts]
 tradingagents = "cli.main:app"
+tradingagents-mcp = "tradingagents.mcp_server.server:main"
 
 [tool.setuptools.dynamic]
 version = {attr = "tradingagents.__version__"}

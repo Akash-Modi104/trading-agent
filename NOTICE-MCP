@@ -1,0 +1,3 @@
+TradingAgents MCP research adaptation, 2026.
+Based on TauricResearch/TradingAgents v0.6.0, commit 1394a3f72aa4393e1a98f51b382434c4b4c2d972.
+Original upstream authors and Apache-2.0 LICENSE retained. Changes add a keyless host-model MCP data interface, documentation and tests.

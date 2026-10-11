@@ -107,10 +107,34 @@ def analyse_stock(ticker: str, as_of_date: str) -> str:
             "The host model is doing this analysis, not the original autonomous TradingAgents graph.")
 
 
+def register_model_tools():
+    from .model_jobs import start_analysis, analysis_status
+
+    @mcp.tool(annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=False, openWorldHint=True))
+    def start_model_analysis(ticker: str, as_of_date: str, portfolio: dict | None = None) -> dict:
+        """Run the original four analysts, bull/bear debate, trader, three risk reviewers and portfolio manager.
+
+        Uses server owner's signed-in Codex model allowance. Writes local reports/memory, executes no trades.
+        Only available when operator starts server with --enable-model. One job at a time.
+        """
+        ticker, as_of_date = validate(ticker, as_of_date)
+        return start_analysis(ticker, as_of_date, portfolio)
+
+    @mcp.tool(annotations=READ_ONLY)
+    def model_analysis_status(job_id: str) -> dict:
+        """Retrieve progress or completed model reports. Jobs reset on restart; report files persist locally."""
+        return analysis_status(job_id)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--transport", choices=["stdio", "streamable-http"], default="stdio")
+    parser.add_argument("--enable-model", action="store_true", help="Allow original graph jobs using signed-in Codex model allowance")
     args = parser.parse_args()
+    if args.enable_model:
+        if args.transport != "stdio":
+            parser.error("Model jobs are local stdio only; remote model execution needs per-user authentication/quota controls")
+        register_model_tools()
     # HTTP intentionally binds loopback. Put authenticated HTTPS deployment in front for remote clients.
     mcp.run(transport=args.transport)
 

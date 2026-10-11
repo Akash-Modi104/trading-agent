@@ -2,6 +2,10 @@
 
 This fork adds a **read-only MCP server** to [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents), based on upstream commit `1394a3f72aa4393e1a98f51b382434c4b4c2d972` (v0.6.0). It reuses upstream Yahoo data and indicators. Your ChatGPT/Claude host model performs research and the bull/bear/risk discussion; the original autonomous graph is **not** run by this adapter. That graph still needs its configured model service. Host subscription and data-provider limits still apply.
 
+## Full model-backed workflow
+
+The original graph can now use your existing Codex sign-in through the new `codex` provider. See [full model workflow](MODEL_WORKFLOW.md), including local MCP `--enable-model` setup, portfolio context, reports, memory and backtests. The data-only tools below remain available without starting model jobs.
+
 ## Install locally
 
 Python 3.11+:
